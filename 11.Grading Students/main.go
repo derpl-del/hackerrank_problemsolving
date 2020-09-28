@@ -15,80 +15,80 @@ import (
  * The function is expected to return an INTEGER_ARRAY.
  * The function accepts INTEGER_ARRAY grades as parameter.
  */
- */
+//*/
 
 func gradingStudents(grades []int32) []int32 {
-    result := []int32{}
-    var (
-        v int32
-        c int32
-        r int32
-    )
-    for _, x := range grades {
-        v = ((x / 5) + 1) * 5
-        if x >= 38 {
-            c = v - x
-            if c < 3 {
-                r = v
-            } else {
-                r = x
-            }
-        } else {
-            r = x
-        }
-     result = append(result,r)
-    }
-   return result
+	result := []int32{}
+	var (
+		v int32
+		c int32
+		r int32
+	)
+	for _, x := range grades {
+		v = ((x / 5) + 1) * 5
+		if x >= 38 {
+			c = v - x
+			if c < 3 {
+				r = v
+			} else {
+				r = x
+			}
+		} else {
+			r = x
+		}
+		result = append(result, r)
+	}
+	return result
 }
 
 func main() {
-    reader := bufio.NewReaderSize(os.Stdin, 16 * 1024 * 1024)
+	reader := bufio.NewReaderSize(os.Stdin, 16*1024*1024)
 
-    stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
-    checkError(err)
+	stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
+	checkError(err)
 
-    defer stdout.Close()
+	defer stdout.Close()
 
-    writer := bufio.NewWriterSize(stdout, 16 * 1024 * 1024)
+	writer := bufio.NewWriterSize(stdout, 16*1024*1024)
 
-    gradesCount, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
-    checkError(err)
+	gradesCount, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
+	checkError(err)
 
-    var grades []int32
+	var grades []int32
 
-    for i := 0; i < int(gradesCount); i++ {
-        gradesItemTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
-        checkError(err)
-        gradesItem := int32(gradesItemTemp)
-        grades = append(grades, gradesItem)
-    }
+	for i := 0; i < int(gradesCount); i++ {
+		gradesItemTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
+		checkError(err)
+		gradesItem := int32(gradesItemTemp)
+		grades = append(grades, gradesItem)
+	}
 
-    result := gradingStudents(grades)
+	result := gradingStudents(grades)
 
-    for i, resultItem := range result {
-        fmt.Fprintf(writer, "%d", resultItem)
+	for i, resultItem := range result {
+		fmt.Fprintf(writer, "%d", resultItem)
 
-        if i != len(result) - 1 {
-            fmt.Fprintf(writer, "\n")
-        }
-    }
+		if i != len(result)-1 {
+			fmt.Fprintf(writer, "\n")
+		}
+	}
 
-    fmt.Fprintf(writer, "\n")
+	fmt.Fprintf(writer, "\n")
 
-    writer.Flush()
+	writer.Flush()
 }
 
 func readLine(reader *bufio.Reader) string {
-    str, _, err := reader.ReadLine()
-    if err == io.EOF {
-        return ""
-    }
+	str, _, err := reader.ReadLine()
+	if err == io.EOF {
+		return ""
+	}
 
-    return strings.TrimRight(string(str), "\r\n")
+	return strings.TrimRight(string(str), "\r\n")
 }
 
 func checkError(err error) {
-    if err != nil {
-        panic(err)
-    }
+	if err != nil {
+		panic(err)
+	}
 }

@@ -15,68 +15,70 @@ import (
  * The function is expected to return an INTEGER.
  * The function accepts INTEGER_ARRAY candles as parameter.
  */
- */
+//*/
 
 func birthdayCakeCandles(candles []int32) int32 {
-    var( max int32
-    val int32)
-    val = 0
-    for _,data:= range candles{
-     if data > max  {
-    max = data
-    }
-    }
-    for _,data:= range candles{
-    if data == max {
-    val ++
-    }
-    }
-    return val
+	var (
+		max int32
+		val int32
+	)
+	val = 0
+	for _, data := range candles {
+		if data > max {
+			max = data
+		}
+	}
+	for _, data := range candles {
+		if data == max {
+			val++
+		}
+	}
+	return val
 
 }
 
 func main() {
-    reader := bufio.NewReaderSize(os.Stdin, 16 * 1024 * 1024)
+	reader := bufio.NewReaderSize(os.Stdin, 16*1024*1024)
 
-    stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
-    checkError(err)
+	stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
+	checkError(err)
 
-    defer stdout.Close()
+	defer stdout.Close()
 
-    writer := bufio.NewWriterSize(stdout, 16 * 1024 * 1024)
+	writer := bufio.NewWriterSize(stdout, 16*1024*1024)
 
-    candlesCount, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
-    checkError(err)
+	candlesCount, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
+	checkError(err)
 
-    candlesTemp := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+	candlesTemp := strings.Split(strings.TrimSpace(readLine(reader)), " ")
 
-    var candles []int32
+	var candles []int32
 
-    for i := 0; i < int(candlesCount); i++ {
-        candlesItemTemp, err := strconv.ParseInt(candlesTemp[i], 10, 64)
-        checkError(err)
-        candlesItem := int32(candlesItemTemp)
-        candles = append(candles, candlesItem)
-    }
+	for i := 0; i < int(candlesCount); i++ {
+		candlesItemTemp, err := strconv.ParseInt(candlesTemp[i], 10, 64)
+		checkError(err)
+		candlesItem := int32(candlesItemTemp)
+		candles = append(candles, candlesItem)
+	}
 
-    result := birthdayCakeCandles(candles)
+	result := birthdayCakeCandles(candles)
 
-    fmt.Fprintf(writer, "%d\n", result)
+	fmt.Fprintf(writer, "%d\n", result)
 
-    writer.Flush()
+	writer.Flush()
 }
 
 func readLine(reader *bufio.Reader) string {
-    str, _, err := reader.ReadLine()
-    if err == io.EOF {
-        return ""
-    }
+	str, _, err := reader.ReadLine()
+	if err == io.EOF {
+		return ""
+	}
 
-    return strings.TrimRight(string(str), "\r\n")
+	return strings.TrimRight(string(str), "\r\n")
 }
 
 func checkError(err error) {
-    if err != nil {
-        panic(err)
-    }
+	if err != nil {
+		panic(err)
+	}
 }

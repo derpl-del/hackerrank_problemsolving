@@ -16,83 +16,83 @@ import (
  * The function is expected to return an INTEGER.
  * The function accepts 2D_INTEGER_ARRAY arr as parameter.
  */
- */
+//*/
 
 func diagonalDifference(arr [][]int32) int32 {
-    now1 := 0
-    now2 := len(arr) - 1
-    var (
-        sum1 int32
-        sum2 int32
-    )
-    for _, row := range arr {
-        for j, val := range row {
-            if now1 == j {
-                sum1 = sum1 + val
-            }
-            if now2 == j {
-                sum2 = sum2 + val
-            }
+	now1 := 0
+	now2 := len(arr) - 1
+	var (
+		sum1 int32
+		sum2 int32
+	)
+	for _, row := range arr {
+		for j, val := range row {
+			if now1 == j {
+				sum1 = sum1 + val
+			}
+			if now2 == j {
+				sum2 = sum2 + val
+			}
 
-        }
-        now1++
-        now2--
-    }
-    result := math.Abs(float64(sum1) - float64(sum2))
-    return int32(result)
+		}
+		now1++
+		now2--
+	}
+	result := math.Abs(float64(sum1) - float64(sum2))
+	return int32(result)
 }
 
 func main() {
-    reader := bufio.NewReaderSize(os.Stdin, 16 * 1024 * 1024)
+	reader := bufio.NewReaderSize(os.Stdin, 16*1024*1024)
 
-    stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
-    checkError(err)
+	stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
+	checkError(err)
 
-    defer stdout.Close()
+	defer stdout.Close()
 
-    writer := bufio.NewWriterSize(stdout, 16 * 1024 * 1024)
+	writer := bufio.NewWriterSize(stdout, 16*1024*1024)
 
-    nTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
-    checkError(err)
-    n := int32(nTemp)
+	nTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
+	checkError(err)
+	n := int32(nTemp)
 
-    var arr [][]int32
-    for i := 0; i < int(n); i++ {
-        arrRowTemp := strings.Split(strings.TrimRight(readLine(reader)," \t\r\n"), " ")
+	var arr [][]int32
+	for i := 0; i < int(n); i++ {
+		arrRowTemp := strings.Split(strings.TrimRight(readLine(reader), " \t\r\n"), " ")
 
-        var arrRow []int32
-        for _, arrRowItem := range arrRowTemp {
-            arrItemTemp, err := strconv.ParseInt(arrRowItem, 10, 64)
-            checkError(err)
-            arrItem := int32(arrItemTemp)
-            arrRow = append(arrRow, arrItem)
-        }
+		var arrRow []int32
+		for _, arrRowItem := range arrRowTemp {
+			arrItemTemp, err := strconv.ParseInt(arrRowItem, 10, 64)
+			checkError(err)
+			arrItem := int32(arrItemTemp)
+			arrRow = append(arrRow, arrItem)
+		}
 
-        if len(arrRow) != int(n) {
-            panic("Bad input")
-        }
+		if len(arrRow) != int(n) {
+			panic("Bad input")
+		}
 
-        arr = append(arr, arrRow)
-    }
+		arr = append(arr, arrRow)
+	}
 
-    result := diagonalDifference(arr)
+	result := diagonalDifference(arr)
 
-    fmt.Fprintf(writer, "%d\n", result)
+	fmt.Fprintf(writer, "%d\n", result)
 
-    writer.Flush()
+	writer.Flush()
 }
 
 func readLine(reader *bufio.Reader) string {
-    str, _, err := reader.ReadLine()
-    if err == io.EOF {
-        return ""
-    }
+	str, _, err := reader.ReadLine()
+	if err == io.EOF {
+		return ""
+	}
 
-    return strings.TrimRight(string(str), "\r\n")
+	return strings.TrimRight(string(str), "\r\n")
 }
 
 func checkError(err error) {
-    if err != nil {
-        panic(err)
-    }
+	if err != nil {
+		panic(err)
+	}
 }
